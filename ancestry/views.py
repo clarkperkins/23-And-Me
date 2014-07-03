@@ -46,6 +46,16 @@ def call(request):
     headers = {
         'Authorization': 'Bearer '+request.session['access_token']
     }
-    r = requests.get('https://api.23andme.com/1/names/', headers=headers)
+    locations = [
+        'rs8176719',
+        'rs8176746',
+        'rs8176747',
+        'rs590787',
+    ]
+    params = {
+        'locations': ' '.join(locations)
+    }
+    
+    r = requests.get('https://api.23andme.com/1/genotypes/ec9db3635fd20e95/', headers=headers, params=params)
     
     return HttpResponse(r.text)
