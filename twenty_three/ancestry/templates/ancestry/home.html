@@ -46,7 +46,11 @@
             <div class="jumbotron text-center">
                 <h1>23andMe API test</h1>
                 {% if logged_in %}
-                
+                <br /><br />
+                <a href="{% url 'ancestry:haplogroups' %}" class="btn btn-lg btn-primary">Haplogroups</a>
+                <a href="{% url 'ancestry:ancestry' %}" class="btn btn-lg btn-primary">Ancestry</a>
+                <a href="{% url 'ancestry:neanderthal' %}" class="btn btn-lg btn-primary">Neanderthal</a>
+                <a href="{% url 'ancestry:genotypes' %}" class="btn btn-lg btn-primary">Genotypes</a>
                 {% endif %}
             </div>
             
