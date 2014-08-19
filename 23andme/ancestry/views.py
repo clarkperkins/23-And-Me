@@ -1,16 +1,16 @@
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
-from geneology import settings
+from django.conf import settings
 import json
 import requests
 
-# Create your views here.
 
 def home(request):
     data = {
         'logged_in': request.session.has_key('access_token')
     }
     return render(request, 'ancestry/home.html', data)
+
 
 def api_login(request):
     return redirect('https://api.23andme.com/authorize/?'
@@ -19,10 +19,12 @@ def api_login(request):
                     +'&client_id='+settings.GENEOLOGY['client_id']
                     +'&scope='+settings.GENEOLOGY['scope'])
 
+
 def api_logout(request):
     del request.session['access_token']
 
     return redirect('ancestry:home')
+
 
 def api_callback(request):
     if request.GET.has_key('code'):
@@ -42,6 +44,7 @@ def api_callback(request):
 
     return redirect('ancestry:home')
 
+
 def call(request):
     headers = {
         'Authorization': 'Bearer '+request.session['access_token']
@@ -53,9 +56,11 @@ def call(request):
         'rs590787',
     ]
     params = {
-        'locations': ' '.join(locations)
+        # 'locations': ' '.join(locations)
     }
     
-    r = requests.get('https://api.23andme.com/1/genotypes/ec9db3635fd20e95/', headers=headers, params=params)
+    r = requests.get('https://api.23andme.com/1/haplogroups/ec9db3635fd20e95/',
+                     headers=headers,
+                     params=params)
     
-    return HttpResponse(r.text)
+    return HttpResponse(json.dumps(r.json(), indent=3))

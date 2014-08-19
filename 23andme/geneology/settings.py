@@ -82,10 +82,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-GENEOLOGY = {
-    'client_id': 'd21125392bba5b655db610e7eb7f23a1',
-    'client_secret': 'b80ab499230502d28737eb1b72a3a82b',
-    'redirect_uri': 'http://home.clarkperkins.com/callback/',
-    'scope': 'basic ancestry names relatives phenotypes:read:sex genomes',
-}
+from local_settings import GENEOLOGY
 
